@@ -12,23 +12,23 @@ Everytime one of this event would be fired, the current video time would be logg
 
 #+begin_src javascript
   function pausedChecker(){
-  document.getElementsByTagName("video")[0].addEventListener('pause', () => {
+      document.getElementsByTagName("video")[0].addEventListener('pause', () => {
 	  return getVideoCurrentTime()
-  })
+      })
   }
 
   function playingChecker(){
-  document.getElementsByTagName("video")[0].addEventListener('play', () => {
+      document.getElementsByTagName("video")[0].addEventListener('play', () => {
 	  return getVideoCurrentTime()
-  })
+      })
   }
 
   function getVideoID(){
-     return new URL(document.URL).searchParams.get('v')
+      return new URL(document.URL).searchParams.get('v')
   }
 
   function getVideoCurrentTime(){
-     return document.getElementsByTagName("video")[0].currentTime
+      return document.getElementsByTagName("video")[0].currentTime
   }
 #+end_src
 
@@ -40,30 +40,30 @@ To keep things as simple as possible, storing the data in localStorage seems to 
 localStorage would be analyzed everytime for the presence of a previously set item, and the array storing the data would be overwritten.
 
 #+begin_src javascript
-var videoDataCollection = []
+  var videoDataCollection = []
 
-function storeVideoData(){
-var videoid = getVideoID()
-			var time = getVideoCurrentTime()
-			var videoData = {id: videoid, playtime: time}
-			videoDataCollection.push(videoData)
-		    }
+  function storeVideoData(){
+      var videoid = getVideoID()
+      var time = getVideoCurrentTime()
+      var videoData = {id: videoid, playtime: time}
+      videoDataCollection.push(videoData)
+  }
 
-		function backupVideoData(data) {
-		    localStorage.setItem('watchd', data);
-		}
+  function backupVideoData(data) {
+      localStorage.setItem('watchd', data);
+  }
 
-		function fetchLocalStorage(){
-		    if (JSON.parse(localStorage.getItem("watchd"))) {
-			videoDataCollection = JSON.parse(localStorage.getItem("watchd"))
-		    }
-		}
+  function fetchLocalStorage(){
+      if (JSON.parse(localStorage.getItem("watchd"))) {
+	  videoDataCollection = JSON.parse(localStorage.getItem("watchd"))
+      }
+  }
 
-			function main(){
-			    fetchLocalStorage()
-			  storeVideoData()
-			backupVideoData(videoDataCollection)
-			    }
+  function main(){
+      fetchLocalStorage()
+      storeVideoData()
+      backupVideoData(videoDataCollection)
+  }
 #+end_src
 
 This piece of code would be the beginning of the real thinking process.
@@ -74,25 +74,25 @@ Multiple issues arise from the code above, one of which is the following :
 After analyzing the video element properties, the played property would be of great help, being able to build segments directly from the ranges stored in these objects.
 
 #+begin_src javascript
-    function getSegmentsPlayed(){
-    var segmentsPlayed = []
+  function getSegmentsPlayed(){
+      var segmentsPlayed = []
     
-    for(var i = 0; i < document.getElementsByTagName("video")[0].played.length; i++) { 
-	var intervalStart = document.getElementsByTagName("video")[0].played.start(i)
-	var intervalEnd = document.getElementsByTagName("video")[0].played.end(i)
-	segmentsPlayed.push(intervalStart + ":" + intervalEnd)
-    }
+      for(var i = 0; i < document.getElementsByTagName("video")[0].played.length; i++) { 
+	  var intervalStart = document.getElementsByTagName("video")[0].played.start(i)
+	  var intervalEnd = document.getElementsByTagName("video")[0].played.end(i)
+	  segmentsPlayed.push(intervalStart + ":" + intervalEnd)
+      }
     
-    var videoData = {id: getVideoID(), playtime: segmentsPlayed}
-    return videoData
-}
+      var videoData = {id: getVideoID(), playtime: segmentsPlayed}
+      return videoData
+  }
 #+end_src
 
 I didn't really realize how bad of a decision it would be to use a delimiter to differentiate the start and the end of the segment.
 For this reason, a quick adjustment was made, and this data would be kept in an object instead, with appropriate keys.
 
 #+begin_src javascript
-   segmentsPlayed.push({start: intervalStart, end: intervalEnd})
+  segmentsPlayed.push({start: intervalStart, end: intervalEnd})
 #+end_src
 
 I talked previously about multiple issues.
@@ -101,27 +101,26 @@ The biggest of them all is by far the handling of data concerning a similar vide
 Therefore, the array containing all the data needed to be checked for possible duplicated id value in all the objects stored.
 
 #+begin_src javascript
+  function checkDuplicateVideoData(){
+      var index = videoDataCollection.findIndex(video => video.id == getVideoID())
+      if (index !== -1) {
+	  videoDataCollection.splice(index, 1);
+      } 
+  }
 
-    function checkDuplicateVideoData(){
-	var index = videoDataCollection.findIndex(video => video.id == getVideoID())
-	if (index !== -1) {
-	    videoDataCollection.splice(index, 1);
-	} 
-    }
-
-    function pausedChecker(){
-	document.getElementsByTagName("video")[0].addEventListener('pause', () => {
-  checkDuplicateVideoData()
+  function pausedChecker(){
+      document.getElementsByTagName("video")[0].addEventListener('pause', () => {
+	  checkDuplicateVideoData()
 	  storeVideoData()
-	})
-    }
+      })
+  }
 
-    function playingChecker(){
-	document.getElementsByTagName("video")[0].addEventListener('play', () => {
-	    checkDuplicateVideoData()
-	    storeVideoData()
-	})
-    }
+  function playingChecker(){
+      document.getElementsByTagName("video")[0].addEventListener('play', () => {
+	  checkDuplicateVideoData()
+	  storeVideoData()
+      })
+  }
 #+end_src
 
 This seemed to do the work, up until I decided to close the browser, reopen it, and discover that all my previous stored data would be gone and replaced by the new ranges stored in the played property.
@@ -132,7 +131,7 @@ But this data vanishes in the void once the video is exited, whether it is after
 This solution needed to be improved.
 
 #+begin_src javascript
-    function checkDuplicateVideoData() {
+  function checkDuplicateVideoData() {
       var videoIndex = getDuplicateVideoDataIndex()
       if (videoIndex !== -1) {
 	  return true
@@ -140,20 +139,20 @@ This solution needed to be improved.
   }
 
   function storeVideoData() {
-    if (!checkDuplicateVideoData) {
-	var videoData = {
-            id: getVideoID(),
-            segments: getSegmentsPlayed()
-	}
-	videoDataCollection.push(videoData)
-    }
+      if (!checkDuplicateVideoData) {
+	  var videoData = {
+	      id: getVideoID(),
+	      segments: getSegmentsPlayed()
+	  }
+	  videoDataCollection.push(videoData)
+      }
 
-    if (checkDuplicateVideoData) {
-	var videoIndex = getDuplicateVideoDataIndex()
-	videoDataCollection[videoIndex].segments = getSegmentsPlayed()
-    }
-}
-}
+      if (checkDuplicateVideoData) {
+	  var videoIndex = getDuplicateVideoDataIndex()
+	  videoDataCollection[videoIndex].segments = getSegmentsPlayed()
+      }
+  }
+  }
 #+end_src
 
 And this is how the first working state of the extension was reached!
