@@ -7,7 +7,7 @@ The initial idea came when watching videos on YouTube with my girlfriend. We wer
 
 For this particular reason, an idea came to my mind to create a Chrome extension that would inject a button on every YouTube video webpage, displaying how much of a video has been watched.
 
-At first, the idea was the following : listening for events on the video HTMLMediaElement, particularly the *play* and *paused* events.
+At first, the idea was the following : listening for events on the video [[https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement][HTMLMediaElement]], particularly the [[https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play_event][play]] and [[https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause_event][pause]] events.
 Everytime one of this event would be fired, the current video time would be logged, and associated to the associated start or end of the segment.
 
 #+begin_src javascript
@@ -35,7 +35,7 @@ Everytime one of this event would be fired, the current video time would be logg
 This would correctly log all the data to the console, but the purpose was to store it correctly.
 Knowing that the extension will be shared to potential users in the near future, a data storage solution needed to be found, fitting with that Chrome extension environment.
 
-To keep things as simple as possible, storing the data in localStorage seems to be the best idea, knowing there is no project to make the data accessible across multiple devices, hence removing the requirement for a database.
+To keep things as simple as possible, storing the data in [[https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage][localStorage]] seems to be the best idea, knowing there is no project to make the data accessible across multiple devices, hence removing the requirement for a database.
 
 localStorage would be analyzed everytime for the presence of a previously set item, and the array storing the data would be overwritten.
 
@@ -71,7 +71,7 @@ This piece of code would be the beginning of the real thinking process.
 Multiple issues arise from the code above, one of which is the following :
 - How to distinguish the start and the end of a watched segment?
 
-After analyzing the video element properties, the played property would be of great help, being able to build segments directly from the ranges stored in these objects.
+After analyzing the video element properties, the [[https://www.w3schools.com/jsref/prop_video_played.asp][played property]] would be of great help, being able to build segments directly from the ranges stored in these objects.
 
 #+begin_src javascript
   function getSegmentsPlayed(){
