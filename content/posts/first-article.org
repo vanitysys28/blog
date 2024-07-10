@@ -1,5 +1,5 @@
 #+TITLE: YouTube, Watched Ranges & History
-#+DATE: 2024-07-10T04:14:54-08:00
+#+DATE: 2024-07-10
 #+DRAFT: true
 #+SUMMARY: Watching YouTube videos, forgetting which ones we saw, and finding a nerdy solution to that existential problem.
 
