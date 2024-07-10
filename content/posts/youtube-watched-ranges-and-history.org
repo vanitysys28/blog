@@ -89,6 +89,7 @@ After analyzing the video element properties, the [[https://www.w3schools.com/js
 #+end_src
 
 I didn't really realize how bad of a decision it would be to use a delimiter to differentiate the start and the end of the segment.
+
 For this reason, a quick adjustment was made, and this data would be kept in an object instead, with appropriate keys.
 
 #+begin_src javascript
