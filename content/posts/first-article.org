@@ -1,6 +1,6 @@
 #+TITLE: YouTube, Watched Ranges & History
 #+DATE: 2024-07-10
-#+DRAFT: true
+#+DRAFT: false
 #+SUMMARY: Watching YouTube videos, forgetting which ones we saw, and finding a nerdy solution to that existential problem.
 
 The initial idea came when watching videos on YouTube with my beloved girlfriend. We were watching all new released videos from a set of channels, and we would quickly get lost and forget which one we saw or didn't.
