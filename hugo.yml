@@ -1,3 +1,6 @@
 title: 'Guillaume Aubert'
 theme: 'PaperMod'
 languageCode: 'en-us'
+
+params:
+  disableSpecial1stPost: true
