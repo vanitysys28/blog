@@ -3,7 +3,7 @@
 #+DRAFT: false
 #+SUMMARY: Watching YouTube videos, forgetting which ones we saw, and finding a nerdy solution to that existential problem.
 
-It all started when watching videos on YouTube with. I was watching all new released videos from a set of channels, and I would quickly get lost and forget which one I saw or didn't.
+It all started when watching videos on YouTube. I was watching all new released videos from a set of channels, and I would quickly get lost and forget which one I saw or didn't.
 
 For this particular reason, an idea came to my mind to create a Chrome extension that would inject a button on every YouTube video webpage, displaying how much of a video has been watched.
 
