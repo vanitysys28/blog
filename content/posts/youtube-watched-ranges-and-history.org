@@ -164,6 +164,8 @@ This article doesn't describe another set of encountered issues and improvements
 
 Another article is on the way, talking about overlaps, the button injection and other little tweaks.
 
-If you are interested by the project, do not hesitate to come check it on : https://github.com/vanitysys28/watchd
+If you are interested by the project, do not hesitate to come check it on: https://github.com/vanitysys28/watchd
 
 It is open source for now, and PR requests or comments are more than welcome.
+
+The extension is also available on the Chrome Web Store, on the following link: https://chromewebstore.google.com/detail/watchd/cjdkmjpbhgkbjgfhcflccchhhffkhhjd
