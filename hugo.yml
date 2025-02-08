@@ -1,7 +1,0 @@
-title: 'Guillaume Aubert'
-theme: 'PaperMod'
-languageCode: 'en-us'
-baseURL: 'https://gaubert.co'
-
-params:
-  disableSpecial1stPost: true
