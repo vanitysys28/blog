@@ -1,8 +1,3 @@
-
-# Table of Contents
-
-
-
 Choosing an editor can be a tough choice when starting to program. Many people will change their environment through the years, some will stick to their most beloved one. Notepad++, Atom, VS Code, Vim, Emacs: the choices are multiple, and everyone can find what suits their personal needs. Some even choose to use less popular options, like [Oliver Lowe](https://www.olowe.co/) and his [Acme](http://acme.cat-v.org/) editor.
 
 16 years ago, after building my first simple website from scratch, I wanted to make it available online, and I purchased a Linux VPS. Things weren't as easy as they are today, and serverless options weren't a thing. I quickly got lost, and had no idea how to edit text files from the terminal. Nano helped me for a bit, then Vim for a much bigger time. [Vim motions](https://www.barbarianmeetscoding.com/boost-your-coding-fu-with-vscode-and-vim/moving-blazingly-fast-with-the-core-vim-motions/) quickly grew on me, and I loved the speed at which I would be able to initiate actions.
