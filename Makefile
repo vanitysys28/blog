@@ -1,3 +1,2 @@
 build:
-	 find posts/* -printf "%f\n" | xargs -I {} sh -c "markdown posts/{} > posts/{}.html; cat src/header.html posts/{}.html > blog/{}.html" 
-	 rm posts/*.html 
+	 find posts/* -printf "%f\n" | xargs -I {} sh -c "markdown posts/{} > /tmp/blog-{}.html; cat src/header.html /tmp/blog-{}.html > blog/{}.html" 
