@@ -4,13 +4,13 @@ Choosing an editor can be a tough choice when starting to program. Many people w
 
 Vim is a fantastic text editor, and it will be for many years to come. I, personally, never really liked the whole plugin-oriented environment, and would never manage to enjoy any of the plugin manager solutions. Even if the motions made me edit at the speed of thought, managing all the plugins and finding the best ecosystem to edit particular files ([Svelte](https://svelte.dev/) comes to mind) would make it far less enjoyable. That's when I discovered Emacs.
 
-I fully understand the fact that some people dislike Emacs' complexity, but I love the built-in capability the GUI version has to browse directories using [Dired](https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html), launch a terminal using any of the available commands or access remote files using [Tramp](https://www.gnu.org/software/tramp/). MELPA also fully extends the range of possibilities, and allows it in a simple manner. Emacs doesn't fully encompass the following Unix philosophy, but it seems to be the perfect tool of my trade as of now.
+I fully understand the fact that some people dislike Emacs' complexity, but I love the built-in capability the GUI version has to browse directories using [Dired](https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html), launch a terminal using any of the available commands or access remote files using [Tramp](https://www.gnu.org/software/tramp/). MELPA also fully extends the range of possibilities, and allows it in a simple manner. Even if Emacs doesn't fully encompass the following Unix philosophy... 
 
 > Make each program do one thing well.
 
-You might be wondering why all this talk about an editor is taking place.
+...it seems to be the perfect tool of my trade as of now.
 
-While researching about programming, I ended up on videos about taking notes, and the importance it can have in the process of learning. At first, I attempted to implement the Zettelkasten method, which [Rob Muhlestein](https://github.com/rwxrob) made me discover. I then switched to a much simpler solution, relying on one major file holding most of the data. This poses an issue about structuring and sectioning, which [Org-mode](https://orgmode.org/) helps me achieve with an incredible simplicity.
+You might be wondering why all this talk about an editor is taking place. While researching about programming, I ended up on videos about taking notes, and the importance it can have in the process of learning. At first, I attempted to implement the Zettelkasten method, which [Rob Muhlestein](https://github.com/rwxrob) made me discover. I then switched to a much simpler solution, relying on one major file holding most of the data. This poses an issue about structuring and sectioning, which [Org-mode](https://orgmode.org/) helps me achieve with an incredible simplicity.
 
 Headlines and visibility cycling is fantastic. Emacs shortcuts, even if much harder to remember compared to Vim counterparts, turns the whole writing activity into a pleasure and my single Org note file grows slowly but surely, safely stored on a private [Git](https://github.com/vanitysys28/) repo. With all these ideas and notes gathered in one file, I wanted a solution to share all this online, and I needed a solution to build a blog.
 
