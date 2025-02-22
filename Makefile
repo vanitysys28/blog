@@ -1,2 +1,3 @@
 build:
-	find posts/ -type f | xargs -I {} sh -c "markdown {} > {}.html" && mv posts/*.html public/
+	 find posts/* -printf "%f\n" | xargs -I {} sh -c "markdown posts/{} > posts/{}.html; cat files/header.html posts/{}.html > public/{}.html" 
+	 rm posts/*.html 
