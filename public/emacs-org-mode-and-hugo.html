@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blog</title>
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<p>Choosing an editor can be a tough choice when starting to program. Many people will change their environment through the years, some will stick to their most beloved one. Notepad++, Atom, VS Code, Vim, Emacs: the choices are multiple, and everyone can find what suits their personal needs. Some even choose to use less popular options, like <a href="https://www.olowe.co/">Oliver Lowe</a> and his <a href="http://acme.cat-v.org/">Acme</a> editor.</p>
+
+<p>16 years ago, after building my first simple website from scratch, I wanted to make it available online, and I purchased a Linux VPS. Things weren't as easy as they are today, and serverless options weren't a thing. I quickly got lost, and had no idea how to edit text files from the terminal. Nano helped me for a bit, then Vim for a much bigger time. <a href="https://www.barbarianmeetscoding.com/boost-your-coding-fu-with-vscode-and-vim/moving-blazingly-fast-with-the-core-vim-motions/">Vim motions</a> quickly grew on me, and I loved the speed at which I would be able to initiate actions.</p>
+
+<p>Vim is a fantastic text editor, and it will be for many years to come. I, personally, never really liked the whole plugin-oriented environment, and would never manage to enjoy any of the plugin manager solutions. Even if the motions made me edit at the speed of thought, managing all the plugins and finding the best ecosystem to edit particular files (<a href="https://svelte.dev/">Svelte</a> comes to mind) would make it far less enjoyable. That's when I discovered Emacs.</p>
+
+<p>I fully understand the fact that some people dislike Emacs' complexity, but I love the built-in capability the GUI version has to browse directories using <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Dired.html">Dired</a>, launch a terminal using any of the available commands or access remote files using <a href="https://www.gnu.org/software/tramp/">Tramp</a>. MELPA also fully extends the range of possibilities, and allows it in a simple manner. Even if Emacs doesn't fully encompass the following Unix philosophy... </p>
+
+<blockquote>
+  <p>Make each program do one thing well.</p>
+</blockquote>
+
+<p>...it seems to be the perfect tool of my trade as of now.</p>
+
+<p>You might be wondering why all this talk about an editor is taking place. While researching about programming, I ended up on videos about taking notes, and the importance it can have in the process of learning. At first, I attempted to implement the Zettelkasten method, which <a href="https://github.com/rwxrob">Rob Muhlestein</a> made me discover. I then switched to a much simpler solution, relying on one major file holding most of the data. This poses an issue about structuring and sectioning, which <a href="https://orgmode.org/">Org-mode</a> helps me achieve with an incredible simplicity.</p>
+
+<p>Headlines and visibility cycling is fantastic. Emacs shortcuts, even if much harder to remember compared to Vim counterparts, turns the whole writing activity into a pleasure and my single Org note file grows slowly but surely, safely stored on a private <a href="https://github.com/vanitysys28/">Git</a> repo. With all these ideas and notes gathered in one file, I wanted a solution to share all this online, and I needed a solution to build a blog.</p>
+
+<p>After a bit of documenting, I hesitated between <a href="https://astro.build/">Astro</a> and <a href="https://gohugo.io/">Hugo</a>. Astro would have been an easy choice, because of it being a Javascript framework. But I heard many good things about Hugo, and I decided to choose it in order to play with the Go language that interests me. <a href="https://gohugo.io/getting-started/quick-start/">Hugo documentation</a> was of great help, and the blog was online in no time after following the tutorial on <a href="https://gohugo.io/hosting-and-deployment/hosting-on-github/">GitHub Pages hosting</a>. The ability to use <a href="https://gohugo.io/content-management/formats/">Emacs Org Mode format</a> directly without having to convert the content to Markdown is a fantastic functionality, and makes everything a breeze with my current environment.</p>
+
+<p>I feel like these last words are of a major importance: many solutions are available to us today, and everyone can find what they love the most to make them more productive. The most important is about finding what you enjoy, and optimize it to make it the best for your activity. On my side, I feel like I found what suits me perfectly, and anyone can use it as inspiration by checking my publicly available <a href="https://github.com/vanitysys28/dotfiles/">dotfiles</a>. </p>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Blog</title>
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<p>It all started when watching videos on YouTube. I was watching all new released videos from a set of channels, and I would quickly get lost and forget which one I saw or didn't.</p>
+
+<p>For this particular reason, an idea came to my mind to create a Chrome extension that would inject a button on every YouTube video webpage, displaying how much of a video has been watched.</p>
+
+<p>At first, the idea was the following : listening for events on the video <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement">HTMLMediaElement</a>, particularly the <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/play_event">play</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/pause_event">pause</a> events.</p>
+
+<p>Everytime one of this event would be fired, the current video time would be logged, and associated to the associated start or end of the segment.</p>
+
+<pre><code>function pausedChecker(){
+    document.getElementsByTagName("video")[0].addEventListener('pause', () =&gt; {
+    return getVideoCurrentTime()
+    })
+}
+
+function playingChecker(){
+    document.getElementsByTagName("video")[0].addEventListener('play', () =&gt; {
+    return getVideoCurrentTime()
+    })
+}
+
+function getVideoID(){
+    return new URL(document.URL).searchParams.get('v')
+}
+
+function getVideoCurrentTime(){
+    return document.getElementsByTagName("video")[0].currentTime
+}
+</code></pre>
+
+<p>This would correctly log all the data to the console, but the purpose was to store it correctly.</p>
+
+<p>Knowing that the extension will be shared to potential users in the near future, a data storage solution needed to be found, fitting with that Chrome extension environment.</p>
+
+<p>To keep things as simple as possible, storing the data in <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">localStorage</a> seems to be the best idea, knowing there is no project to make the data accessible across multiple devices, hence removing the requirement for a database.</p>
+
+<p>localStorage would be analyzed everytime for the presence of a previously set item, and the array storing the data would be overwritten.</p>
+
+<pre><code>var videoDataCollection = []
+
+function storeVideoData(){
+    var videoid = getVideoID()
+    var time = getVideoCurrentTime()
+    var videoData = {id: videoid, playtime: time}
+    videoDataCollection.push(videoData)
+}
+
+function backupVideoData(data) {
+    localStorage.setItem('watchd', data);
+}
+
+function fetchLocalStorage(){
+    if (JSON.parse(localStorage.getItem("watchd"))) {
+    videoDataCollection = JSON.parse(localStorage.getItem("watchd"))
+    }
+}
+
+function main(){
+    fetchLocalStorage()
+    storeVideoData()
+    backupVideoData(videoDataCollection)
+}
+</code></pre>
+
+<p>This piece of code would be the beginning of the real thinking process.</p>
+
+<p>Multiple issues arise from the code above, one of which is the following :</p>
+
+<ul>
+<li>How to distinguish the start and the end of a watched segment?</li>
+</ul>
+
+<p>After analyzing the video element properties, the <a href="https://www.w3schools.com/jsref/prop_video_played.asp">played property</a> would be of great help, being able to build segments directly from the ranges stored in these objects.</p>
+
+<pre><code>function getSegmentsPlayed(){
+    var segmentsPlayed = []
+
+    for(var i = 0; i &lt; document.getElementsByTagName("video")[0].played.length; i++) { 
+    var intervalStart = document.getElementsByTagName("video")[0].played.start(i)
+    var intervalEnd = document.getElementsByTagName("video")[0].played.end(i)
+    segmentsPlayed.push(intervalStart + ":" + intervalEnd)
+    }
+
+    var videoData = {id: getVideoID(), playtime: segmentsPlayed}
+    return videoData
+}
+</code></pre>
+
+<p>I didn't really realize how bad of a decision it would be to use a delimiter to differentiate the start and the end of the segment.</p>
+
+<p>For this reason, a quick adjustment was made, and this data would be kept in an object instead, with appropriate keys.</p>
+
+<pre><code>segmentsPlayed.push({start: intervalStart, end: intervalEnd})
+</code></pre>
+
+<p>I talked previously about multiple issues.
+The biggest of them all is by far the handling of data concerning a similar video.</p>
+
+<p>Therefore, the array containing all the data needed to be checked for possible duplicated id value in all the objects stored.</p>
+
+<pre><code>function checkDuplicateVideoData(){
+    var index = videoDataCollection.findIndex(video =&gt; video.id == getVideoID())
+    if (index !== -1) {
+    videoDataCollection.splice(index, 1);
+    } 
+}
+
+function pausedChecker(){
+    document.getElementsByTagName("video")[0].addEventListener('pause', () =&gt; {
+    checkDuplicateVideoData()
+    storeVideoData()
+    })
+}
+
+function playingChecker(){
+    document.getElementsByTagName("video")[0].addEventListener('play', () =&gt; {
+    checkDuplicateVideoData()
+    storeVideoData()
+    })
+}
+</code></pre>
+
+<p>This seemed to do the work, up until I decided to close the browser, reopen it, and discover that all my previous stored data would be gone and replaced by the new ranges stored in the played property.</p>
+
+<p>The played property was a god send in that project, helping for a precise tracking of the played ranges.
+But this data vanishes in the void once the video is exited, whether it is after closing the browser, or navigating to another video when binge watching.</p>
+
+<p>This solution needed to be improved.</p>
+
+<pre><code>function checkDuplicateVideoData() {
+    var videoIndex = getDuplicateVideoDataIndex()
+    if (videoIndex !== -1) {
+    return true
+    }
+}
+
+function storeVideoData() {
+    if (!checkDuplicateVideoData) {
+    var videoData = {
+        id: getVideoID(),
+        segments: getSegmentsPlayed()
+    }
+    videoDataCollection.push(videoData)
+    }
+
+    if (checkDuplicateVideoData) {
+    var videoIndex = getDuplicateVideoDataIndex()
+    videoDataCollection[videoIndex].segments = getSegmentsPlayed()
+    }
+}
+}
+</code></pre>
+
+<p>And this is how the first working state of the extension was reached!</p>
+
+<p>This article doesn't describe another set of encountered issues and improvements that was brought to the project, but it was published to better explain the whole methodology that was used while building that little piece of software.</p>
+
+<p>Another article is on the way, talking about overlaps, the button injection and other little tweaks.</p>
+
+<p>If you are interested by the project, do not hesitate to come check it on: <a href="https://github.com/vanitysys28/watchd">https://github.com/vanitysys28/watchd</a></p>
+
+<p>It is open source for now, and PR requests or comments are more than welcome.</p>
+
+<p>The extension is also available on the Chrome Web Store, on the following link: <a href="https://chromewebstore.google.com/detail/watchd/cjdkmjpbhgkbjgfhcflccchhhffkhhjd">https://chromewebstore.google.com/detail/watchd/cjdkmjpbhgkbjgfhcflccchhhffkhhjd</a></p>
